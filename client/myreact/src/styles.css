@@ -1,0 +1,80 @@
+* {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+	list-style: none;
+}
+
+body {
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	background-color: #f5f5f5;
+}
+
+.header {
+	background-color: rgb(49, 98, 233);
+	color: #fff;
+	min-height: 80px;
+}
+
+.h1 {
+	height: 100%;
+	margin-left: 20px;
+}
+nav ul {
+	list-style: none;
+	margin-right: 20px;
+	text-transform: uppercase;
+}
+nav ul li a {
+	display: inline;
+	margin-left: 30px;
+	border-radius: 5px;
+	color: #b1e9ff;
+}
+a:active,
+a:hover {
+	color: rgb(255, 255, 255);
+	transition: 0.25s;
+}
+
+.box {
+	background-color: #ffffff;
+	border-radius: 0.35rem;
+	padding: 1rem;
+	margin: 00.5rem;
+	color: #2c2c2c;
+	font-size: small;
+}
+
+.card-bg{
+	background-color: #effaff;
+}
+
+#p{
+	font-size: 20px;
+}
+
+.image-curve {
+	border-radius: 0.5rem;
+}
+.image {
+	max-height: 500px;
+	max-width: 500px;
+	border-radius: 0.5rem;
+}
+
+.test {
+	background-color: #2c2c2c;
+}
+
+.container{
+	color: #2c2c2c;
+}
+.tinystar {
+	max-height: 50px;
+	max-width: 50px;
+}
+.xtratinystar {
+	max-height: 20px;
+	max-width: 20px;
+}
