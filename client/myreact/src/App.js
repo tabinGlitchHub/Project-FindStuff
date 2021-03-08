@@ -5,6 +5,7 @@ import Cart from "./routes/Cart";
 import ProductDetail from "./routes/ProductDetail";
 import SellProduct from "./routes/SellProduct";
 import { ProductContextProvider } from "./context/ProductsContext";
+import LoginPage from "./routes/LoginPage";
 
 function App() {
 	return (
@@ -12,6 +13,7 @@ function App() {
 			<ProductContextProvider>
 				<Router>
 					<Switch>
+						<Route exact path='/login' component={LoginPage}/>
 						<Route exact path='/' component={Home} />
 						<Route exact path='/cart' component={Cart} />
 						<Route exact path='/product/:id' component={ProductDetail} />

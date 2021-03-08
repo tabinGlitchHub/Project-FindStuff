@@ -111,6 +111,41 @@ app.delete("/api/v1/products/:id", async (req, res) => {
 	}
 });
 
+//register a user
+app.post("/api/v1/users/", async (req, res) => {
+	try {
+		const users = await db.query(
+			`INSERT INTO users(user_name, user_password) values($1,$2)`,
+			[req.body.user_name, req.body.user_password]
+		);
+		req.status(200).json({
+			status: "successfully registered",
+			result: users.rows.length,
+			data: users.rows[0],
+		});
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+//get a user(login)
+app.get("/api/v1/users/", async (req, res) => {
+	try {
+		const users = await db.query(
+			`SELECT * FROM users WHERE user_name=$1 AND user_password=$2`,
+			[req.body.user_name, req.body.user_password]
+		);
+		req.status(200).json({
+			status: "successfully logged In",
+			result: users.rows.length,
+			data: users.rows[0],
+		});
+	} catch (error) {
+		console.log(error);
+		res.send({ error: error });
+	}
+});
+
 app.listen(port, () => {
 	console.log(`server up and listening at port ${port}`);
 });
