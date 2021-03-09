@@ -1,21 +1,56 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import usersApi from "../apis/usersApi";
+import { ProductsContext } from "../context/ProductsContext";
 
 const LoginPage = () => {
+	const {
+		isLoggedIn,
+		setIsLoggedIn,
+		currentUserName,
+		setCurrentUserName,
+	} = useContext(ProductsContext);
+
+	//login credentials
+	const [currentPassword, setCurrentPassword] = useState("");
+
+	//register credentials
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 
-	const [currentUserName, setCurrentUserName] = useState("");
-	const [currentPassword, setcurrentassword] = useState("");
+	const [loginWarningText, setLoginWarningText] = useState("");
+	const [regWarningText, setRegWarningText] = useState("");
 
-	//handle post request
+	let history = useHistory();
+
+	//handle register request
 	const handleRegSubmit = async (e) => {
 		e.preventDefault();
+
+		//check if username already exists
 		try {
-			const response = await usersApi.post("/register", {
+			const response = await usersApi.post("/verification", {
 				user_name: userName,
-				user_password: password,
 			});
+			if (response.data.status === "taken") {
+				setRegWarningText("UserName Taken");
+			} else if (response.data.status === "free") {
+				if (userName.length > 16 || userName.length < 4) {
+					setRegWarningText(
+						"UserName must be more than 4 characters and less than 16 characters long!"
+					);
+				} else {
+					try {
+						const response = await usersApi.post("/register", {
+							user_name: userName,
+							user_password: password,
+						});
+						setRegWarningText("Successfully Registered! Now you may Login");
+					} catch (error) {
+						console.log(error);
+					}
+				}
+			}
 		} catch (error) {
 			console.log(error);
 		}
@@ -24,10 +59,20 @@ const LoginPage = () => {
 	const handleLoginSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const response = await usersApi.get("/login", {
-				user_name: currentUserName,
-				user_password: currentPassword,
-			});
+			const response = await usersApi
+				.post("/login", {
+					user_name: currentUserName,
+					user_password: currentPassword,
+				})
+				.then((response) => {
+					if (response.data.status === "success") {
+						setIsLoggedIn(true);
+						setLoginWarningText("");
+						history.push(`/`);
+					} else {
+						setLoginWarningText("Incorrect User name or password");
+					}
+				});
 		} catch (error) {
 			console.log(error);
 		}
@@ -43,7 +88,7 @@ const LoginPage = () => {
 						type='text'
 						placeholder='JimHalpert'
 						onChange={(e) => {
-							setUserName(e.target.value);
+							setCurrentUserName(e.target.value);
 						}}
 					/>
 				</div>
@@ -53,12 +98,16 @@ const LoginPage = () => {
 						type='text'
 						placeholder='******'
 						onChange={(e) => {
-							setPassword(e.target.value);
+							setCurrentPassword(e.target.value);
 						}}
 					/>
 				</div>
+				<div>{loginWarningText}</div>
 				<div>
-					<button className='btn btn-primary' type='submit'>
+					<button
+						className='btn btn-primary'
+						type='submit'
+						onClick={handleLoginSubmit}>
 						Login
 					</button>
 				</div>
@@ -86,6 +135,7 @@ const LoginPage = () => {
 						}}
 					/>
 				</div>
+				<div>{regWarningText}</div>
 				<div>
 					<button
 						className='btn btn-primary'

@@ -112,13 +112,13 @@ app.delete("/api/v1/products/:id", async (req, res) => {
 });
 
 //register a user
-app.post("/api/v1/users/", async (req, res) => {
+app.post("/api/v1/users/register", async (req, res) => {
 	try {
 		const users = await db.query(
 			`INSERT INTO users(user_name, user_password) values($1,$2)`,
 			[req.body.user_name, req.body.user_password]
 		);
-		req.status(200).json({
+		res.status(200).json({
 			status: "successfully registered",
 			result: users.rows.length,
 			data: users.rows[0],
@@ -129,17 +129,48 @@ app.post("/api/v1/users/", async (req, res) => {
 });
 
 //get a user(login)
-app.get("/api/v1/users/", async (req, res) => {
+app.post("/api/v1/users/login", async (req, res) => {
 	try {
 		const users = await db.query(
 			`SELECT * FROM users WHERE user_name=$1 AND user_password=$2`,
 			[req.body.user_name, req.body.user_password]
 		);
-		req.status(200).json({
-			status: "successfully logged In",
-			result: users.rows.length,
-			data: users.rows[0],
-		});
+		if (users.rows.length > 0) {
+			res.status(200).send({
+				status: "success",
+				result: users.rows.length,
+				data: users.rows[0],
+			});
+		}else{
+			res.status(200).send({
+				status: "404",
+				result: users.rows.length,
+			});
+		}
+	} catch (error) {
+		console.log(error);
+		res.send({ error: error });
+	}
+});
+
+//check if username is taken
+app.post("/api/v1/users/verification", async (req, res) => {
+	try {
+		const users = await db.query(
+			`SELECT * FROM users WHERE user_name=$1`,
+			[req.body.user_name]
+		);
+		if (users.rows.length > 0) {
+			res.status(200).send({
+				status: "taken",
+				result: users.rows.length,
+			});
+		}else{
+			res.status(200).send({
+				status: "free",
+				result: users.rows.length,
+			});
+		}
 	} catch (error) {
 		console.log(error);
 		res.send({ error: error });

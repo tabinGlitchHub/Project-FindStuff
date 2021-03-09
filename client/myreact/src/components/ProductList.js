@@ -6,7 +6,7 @@ import { ProductsContext } from "../context/ProductsContext";
 const ProductList = (props) => {
 	//destructure prop and store it in context
 	const { productList, setProductList } = useContext(ProductsContext);
-	//to route to next site
+	//to route to next page
 	let history = useHistory();
 
 	//push on detail page of product with matching id

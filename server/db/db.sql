@@ -59,3 +59,9 @@ ALTER COLUMN user_name VARCHAR(14) NOT NULL;
 
 ALTER TABLE users
 DROP COLUMN user_name;
+
+
+--delete row----------------------------------------------------------
+
+DELETE FROM users
+WHERE user_password='halpert';
