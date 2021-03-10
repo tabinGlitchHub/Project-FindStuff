@@ -30,8 +30,8 @@ const ProductList = (props) => {
 	}, []);
 
 	return (
-		<main class='container'>
-			<div class='row'>
+		<main className='container'>
+			<div className='row'>
 				{productList.map((product) => {
 					return (
 						<div
@@ -41,7 +41,7 @@ const ProductList = (props) => {
 							key={product.id}
 							className='box col-xl'>
 							<img
-								class='img-fluid image-curve'
+								className='img-fluid image-curve'
 								src={product.imageurl}
 								alt='dummy'
 							/>

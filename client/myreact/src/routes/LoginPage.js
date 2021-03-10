@@ -5,7 +5,7 @@ import { ProductsContext } from "../context/ProductsContext";
 
 const LoginPage = () => {
 	const {
-		isLoggedIn,
+		setCurrentUserid,
 		setIsLoggedIn,
 		currentUserName,
 		setCurrentUserName,
@@ -68,6 +68,7 @@ const LoginPage = () => {
 					if (response.data.status === "success") {
 						setIsLoggedIn(true);
 						setLoginWarningText("");
+						setCurrentUserid(response.data.data.user_id);
 						history.push(`/`);
 					} else {
 						setLoginWarningText("Incorrect User name or password");

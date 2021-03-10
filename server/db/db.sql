@@ -47,8 +47,8 @@ SET user_name = 'admin2'
 WHERE user_id = 2;
 
 --add column
-ALTER TABLE users
-ADD user_name VARCHAR(14) NOT NULL DEFAULT 'user';
+ALTER TABLE cart
+ADD product_count INT NOT NULL DEFAULT '1';
 
 --Alter datatype
 ALTER TABLE users
@@ -57,11 +57,11 @@ ALTER COLUMN user_name VARCHAR(14) NOT NULL;
 
 --delete column-------------------------------------------------------
 
-ALTER TABLE users
-DROP COLUMN user_name;
+ALTER TABLE cart
+DROP COLUMN product_count;
 
 
 --delete row----------------------------------------------------------
 
-DELETE FROM users
-WHERE user_password='halpert';
+DELETE FROM cart
+WHERE product_id=1;

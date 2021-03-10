@@ -1,25 +1,43 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 const Header = () => {
+	let history = useHistory();
+
+	const handleClick = (page) => {
+		history.push(page);
+	};
 	return (
 		<div className='header'>
 			<h1 className='h1'>Find Stuff</h1>
 			<nav>
 				<ul className='nav nav-pills justify-content-end '>
 					<li className='nav-item'>
-						<a className='nav-link' href='/'>
+						<button
+							className='nav-link'
+							onClick={() => {
+								handleClick("/");
+							}}>
 							Home
-						</a>
+						</button>
 					</li>
 					<li className='nav-item'>
-						<a className='nav-link' href='/cart'>
+						<button
+							className='nav-link'
+							onClick={() => {
+								handleClick("/cart");
+							}}>
 							Cart
-						</a>
+						</button>
 					</li>
 					<li className='nav-item'>
-						<a className='nav-link' href='/sell'>
+						<button
+							className='nav-link'
+							onClick={() => {
+								handleClick("/sell");
+							}}>
 							Sell
-						</a>
+						</button>
 					</li>
 				</ul>
 			</nav>

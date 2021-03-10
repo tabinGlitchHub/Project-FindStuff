@@ -141,7 +141,7 @@ app.post("/api/v1/users/login", async (req, res) => {
 				result: users.rows.length,
 				data: users.rows[0],
 			});
-		}else{
+		} else {
 			res.status(200).send({
 				status: "404",
 				result: users.rows.length,
@@ -156,16 +156,15 @@ app.post("/api/v1/users/login", async (req, res) => {
 //check if username is taken
 app.post("/api/v1/users/verification", async (req, res) => {
 	try {
-		const users = await db.query(
-			`SELECT * FROM users WHERE user_name=$1`,
-			[req.body.user_name]
-		);
+		const users = await db.query(`SELECT * FROM users WHERE user_name=$1`, [
+			req.body.user_name,
+		]);
 		if (users.rows.length > 0) {
 			res.status(200).send({
 				status: "taken",
 				result: users.rows.length,
 			});
-		}else{
+		} else {
 			res.status(200).send({
 				status: "free",
 				result: users.rows.length,
@@ -174,6 +173,54 @@ app.post("/api/v1/users/verification", async (req, res) => {
 	} catch (error) {
 		console.log(error);
 		res.send({ error: error });
+	}
+});
+
+//add to cart
+app.post("/api/v1/users/cart", async (req, res) => {
+	try {
+		const cart = await db.query(
+			`INSERT INTO cart(user_id,product_id) values($1,$2);`,
+			[req.body.user_id, req.body.product_id]
+		);
+		res.status(200).send({
+			status: "added to cart",
+			result: cart.rows.length,
+		});
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+//getcart index and total
+app.post("/api/v1/users/cart/indices", async (req, res) => {
+	try {
+		const cart = await db.query(`SELECT * FROM cart WHERE user_id=$1`, [
+			req.body.user_id,
+		]);
+		res.status(200).send({
+			status: "success",
+			result: cart.rows.length,
+			data: cart.rows,
+		});
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+//get all products matching cart index
+app.post("/api/v1/users/cart/list", async (req, res) => {
+	try {
+		const cart = await db.query(`SELECT * FROM products WHERE id=$1`, [
+			req.body.id,
+		]);
+		res.status(200).send({
+			status: "success",
+			result: cart.rows.length,
+			data: cart.rows,
+		});
+	} catch (error) {
+		console.log(error);
 	}
 });
 

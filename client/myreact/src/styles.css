@@ -20,19 +20,15 @@ body {
 	height: 100%;
 	margin-left: 20px;
 }
-nav ul {
-	list-style: none;
-	margin-right: 20px;
-	text-transform: uppercase;
-}
-nav ul li a {
+nav ul li button {
 	display: inline;
-	margin-left: 30px;
+	margin-left: 20px;
 	border-radius: 5px;
 	color: #b1e9ff;
+	text-transform: uppercase;
 }
-a:active,
-a:hover {
+nav ul li button:active,
+nav ul li button:hover {
 	color: rgb(255, 255, 255);
 	transition: 0.25s;
 }

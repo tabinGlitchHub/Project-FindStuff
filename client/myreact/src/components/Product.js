@@ -1,14 +1,21 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import productApi from "../apis/productApi";
 import { ProductsContext } from "../context/ProductsContext";
 import Reviews from "../components/Reviews";
 import reviewApi from "../apis/reviewApi";
+import cartApi from "../apis/cartApi";
 
 function Product() {
 	const { id } = useParams();
-	const { selectedProduct, setSelectedProduct } = useContext(ProductsContext);
-	const { reviews, setReviews } = useContext(ProductsContext);
+	const {
+		selectedProduct,
+		setSelectedProduct,
+		reviews,
+		setReviews,
+		currentUserId,
+	} = useContext(ProductsContext);
+	const [warningText, setWarningText] = useState("");
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -22,6 +29,14 @@ function Product() {
 		fetchData();
 		fetchReview();
 	}, []);
+
+	const handleAddToCartClick = async () => {
+		const response = await cartApi.post("/", {
+			product_id: id,
+			user_id: currentUserId,
+		});
+		setWarningText("Added to cart successfully");
+	};
 
 	const averageRating = () => {
 		let i = 0;
@@ -46,10 +61,14 @@ function Product() {
 						alt='dummy'
 					/>
 					<h4>₹ {selectedProduct.price}</h4>
+					<button className='btn btn-primary' onClick={handleAddToCartClick}>
+						Add to cart
+					</button>
+					<p>{warningText}</p>
 				</div>
 				<div className='col box'>
 					<span className='text-center'>
-						<Reviews rating={averageRating()} size={1}/>
+						<Reviews rating={averageRating()} size={1} />
 					</span>
 					<hr />
 					<div>
