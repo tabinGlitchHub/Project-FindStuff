@@ -12,53 +12,61 @@ function CartBasket() {
 		productList,
 	} = useContext(ProductsContext);
 
-	let cartId = [];
+	useEffect(() => {
+		const fetchProducts = async (item) => {
+			try {
+				const response = await cartApi
+					.post("/list", {
+						id: item.product_id,
+					})
+					.then((response) => {
+						cartList.push(response.data.data);
+					});
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		if (cartIndices.length !== cartList.length) {
+			cartIndices.forEach((item) => {
+				fetchProducts(item);
+			});
+		}
+		console.log("ping");
+	}, [cartIndices, cartList]);
 
 	useEffect(() => {
-		const fetchData = async () => {
+		const fetchCart = async () => {
 			try {
-				//get method brings cart from database
-				const response = await cartApi.post("/indices", {
-					user_id: currentUserId,
-				});
-				setCartIndices(response.data.data);
+				//get method brings cart-ids from database
+				const response = await cartApi
+					.post("/indices", {
+						user_id: currentUserId,
+					})
+					.then((response) => {
+						if (cartIndices.length !== response.data.data.length) {
+							setCartIndices(response.data.data);
+						}
+					});
 			} catch (error) {
 				console.log(error);
 			}
 		};
-		cartIndices.forEach((item) => {
-			cartId.push(item.product_id);
-		});
-
-		const fetchList = async (i) => {
-			try {
-				const response = await cartApi.post("/list", {
-					id: cartId[i],
-				});
-				cartList.push(response.data.data);
-			} catch (error) {
-				console.log(error);
-			}
-		};
-		fetchList();
-		for (let i = 0; i < cartId.length; i++) {
-			fetchData(i);
-		}
+		fetchCart();
 	}, []);
 
 	return (
 		<main className='container'>
 			<div className='row'>
-				{cartList.map((product, i) => {
+				{cartList.map((product) => {
 					return (
-						<div key={product.id} className='box col-xs'>
+						<div key={product[0].id} className='box col-xs'>
 							<img
-								class='img-fluid image-curve'
-								src={product.imageurl}
+								className='img-fluid image-curve'
+								src={product[0].imageurl}
 								alt='dummy'
 							/>
-							<p id='p'>{product.name}</p>
-							<p id='p'>₹ {product.price}</p>
+							<p id='p'>{product[0].name}</p>
+							<p id='p'>₹ {product[0].price}</p>
 						</div>
 					);
 				})}

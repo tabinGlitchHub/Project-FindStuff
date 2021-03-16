@@ -64,4 +64,4 @@ DROP COLUMN product_count;
 --delete row----------------------------------------------------------
 
 DELETE FROM cart
-WHERE product_id=1;
+WHERE product_id=2;
