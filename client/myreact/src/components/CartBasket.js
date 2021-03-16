@@ -13,28 +13,6 @@ function CartBasket() {
 	} = useContext(ProductsContext);
 
 	useEffect(() => {
-		const fetchProducts = async (item) => {
-			try {
-				const response = await cartApi
-					.post("/list", {
-						id: item.product_id,
-					})
-					.then((response) => {
-						cartList.push(response.data.data);
-					});
-			} catch (error) {
-				console.log(error);
-			}
-		};
-		if (cartIndices.length !== cartList.length) {
-			cartIndices.forEach((item) => {
-				fetchProducts(item);
-			});
-		}
-		console.log("ping");
-	}, [cartIndices, cartList]);
-
-	useEffect(() => {
 		const fetchCart = async () => {
 			try {
 				//get method brings cart-ids from database
@@ -54,25 +32,56 @@ function CartBasket() {
 		fetchCart();
 	}, []);
 
-	return (
-		<main className='container'>
-			<div className='row'>
-				{cartList.map((product) => {
-					return (
-						<div key={product[0].id} className='box col-xs'>
-							<img
-								className='img-fluid image-curve'
-								src={product[0].imageurl}
-								alt='dummy'
-							/>
-							<p id='p'>{product[0].name}</p>
-							<p id='p'>₹ {product[0].price}</p>
-						</div>
-					);
-				})}
-			</div>
-		</main>
-	);
+	useEffect(() => {
+		const fetchProducts = async (item) => {
+			try {
+				const response = await cartApi
+					.post("/list", {
+						id: item.product_id,
+					})
+					.then((response) => {
+						cartList.push(response.data.data);
+					});
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		if (cartIndices.length !== cartList.length) {
+			cartIndices.forEach((item) => {
+				fetchProducts(item);
+			});
+		}
+	}, [cartIndices,cartList]);
+
+	if (cartList.length === 0) {
+		return (
+			<main className='container'>
+				<div>
+					<p>Such empty...Login and add something to your Cart!</p>
+				</div>
+			</main>
+		);
+	} else {
+		return (
+			<main className='container'>
+				<div className='row'>
+					{cartList.map((product) => {
+						return (
+							<div key={product[0].id} className='box col-xs'>
+								<img
+									className='img-fluid image-curve'
+									src={product[0].imageurl}
+									alt='dummy'
+								/>
+								<p id='p'>{product[0].name}</p>
+								<p id='p'>₹ {product[0].price}</p>
+							</div>
+						);
+					})}
+				</div>
+			</main>
+		);
+	}
 }
 
 export default CartBasket;

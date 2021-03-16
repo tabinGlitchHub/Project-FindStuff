@@ -77,3 +77,6 @@ nav ul li button:hover {
 .loginForm{
 	width: 30%;
 }
+.loginBtn{
+	float: right;
+}

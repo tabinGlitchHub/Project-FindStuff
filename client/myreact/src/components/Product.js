@@ -14,6 +14,7 @@ function Product() {
 		reviews,
 		setReviews,
 		currentUserId,
+		isLoggedin,
 	} = useContext(ProductsContext);
 	const [warningText, setWarningText] = useState("");
 
@@ -61,7 +62,10 @@ function Product() {
 						alt='dummy'
 					/>
 					<h4>₹ {selectedProduct.price}</h4>
-					<button className='btn btn-primary' onClick={handleAddToCartClick}>
+					<button
+						className='btn btn-primary'
+						disabled={isLoggedin ? false : true}
+						onClick={handleAddToCartClick}>
 						Add to cart
 					</button>
 					<p>{warningText}</p>

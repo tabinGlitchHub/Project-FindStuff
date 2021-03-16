@@ -84,20 +84,18 @@ const LoginPage = () => {
 			<form>
 				<div className='mb-3'>
 					<h2>Login</h2>
-					<label className='form-label'>Username</label>
 					<input
 						type='text'
-						placeholder='JimHalpert'
+						placeholder='User Name'
 						onChange={(e) => {
 							setCurrentUserName(e.target.value);
 						}}
 					/>
 				</div>
 				<div className='mb-3'>
-					<label className='form-label'>Password</label>
 					<input
-						type='text'
-						placeholder='******'
+						type='password'
+						placeholder='Password'
 						onChange={(e) => {
 							setCurrentPassword(e.target.value);
 						}}
@@ -117,20 +115,20 @@ const LoginPage = () => {
 			<form>
 				<div className='mb-3'>
 					<h2>Register</h2>
-					<label className='form-label'>Username</label>
+					{/* <label className='form-label'>Username</label> */}
 					<input
 						type='text'
-						placeholder='JimHalpert'
+						placeholder='User Name'
 						onChange={(e) => {
 							setUserName(e.target.value);
 						}}
 					/>
 				</div>
 				<div className='mb-3'>
-					<label className='form-label'>Password</label>
+					{/* <label className='form-label'>Password</label> */}
 					<input
-						type='text'
-						placeholder='******'
+						type='password'
+						placeholder='Password'
 						onChange={(e) => {
 							setPassword(e.target.value);
 						}}
