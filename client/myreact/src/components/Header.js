@@ -5,9 +5,16 @@ import { ProductsContext } from "../context/ProductsContext";
 const Header = () => {
 	let history = useHistory();
 
-	const { isLoggedin, setIsLoggedIn, currentUserName } = useContext(
-		ProductsContext
-	);
+	const {
+		isLoggedin,
+		setIsLoggedIn,
+		currentUserName,
+		setProductList,
+		setCartIndices,
+		setCartList,
+		setCurrentUserName,
+		setCurrentUserid,
+	} = useContext(ProductsContext);
 
 	const handleClick = (page) => {
 		history.push(page);
@@ -16,6 +23,11 @@ const Header = () => {
 		history.push(page);
 		if (isLoggedin) {
 			setIsLoggedIn(false);
+			setProductList([]);
+			setCartIndices([]);
+			setCartList([]);
+			setCurrentUserName("");
+			setCurrentUserid();
 		}
 	};
 	return (
