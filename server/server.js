@@ -224,6 +224,22 @@ app.post("/api/v1/users/cart/list", async (req, res) => {
 	}
 });
 
+//remove from cart
+app.delete("/api/v1/users/cart/remove", async (req, res) => {
+	try {
+		const cart = await db.query(`DELETE FROM cart where product_id=$1`, [
+			req.body.product_id,
+		]);
+		res.status(200).send({
+			status: "success",
+			result: cart.rows.length,
+			data: cart.rows,
+		});
+	} catch (error) {
+		console.log(error);
+	}
+});
+
 app.listen(port, () => {
 	console.log(`server up and listening at port ${port}`);
 });

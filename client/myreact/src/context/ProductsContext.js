@@ -11,6 +11,7 @@ export const ProductContextProvider = (props) => {
 	const [reviews, setReviews] = useState([]);
 	const [currentUserName, setCurrentUserName] = useState("");
 	const [currentUserId, setCurrentUserid] = useState();
+	const [totalAmount, setTotalAmount] = useState(0);
 
 	return (
 		<ProductsContext.Provider
@@ -31,6 +32,8 @@ export const ProductContextProvider = (props) => {
 				setCartList,
 				cartIndices,
 				setCartIndices,
+				totalAmount,
+				setTotalAmount,
 			}}>
 			{props.children}
 		</ProductsContext.Provider>
