@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import productApi from "../apis/productApi";
+import { ProductsContext } from "../context/ProductsContext";
 
 const SellProductForm = () => {
 	const [name, setName] = useState("");
 	const [price, setPrice] = useState(null);
 	const [img, setImg] = useState("");
+
+	const { currentUserId } = useContext(ProductsContext);
 
 	//handle post request
 	const handleSubmit = async (e) => {
@@ -14,6 +17,7 @@ const SellProductForm = () => {
 				name,
 				price,
 				imageurl: img,
+				owner_id: currentUserId,
 			});
 		} catch (error) {
 			console.log(error);
@@ -22,6 +26,7 @@ const SellProductForm = () => {
 
 	return (
 		<div>
+			<h4>Tell Us about your Product.</h4>
 			<form>
 				<div>
 					<p>Name of the product</p>

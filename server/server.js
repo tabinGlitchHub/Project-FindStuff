@@ -65,8 +65,8 @@ app.get("/api/v1/products/:id", async (req, res) => {
 app.post("/api/v1/products/", async (req, res) => {
 	try {
 		const products = await db.query(
-			`INSERT INTO products(name, price, imageurl) values($1,$2,$3) returning *`,
-			[req.body.name, req.body.price, req.body.imageurl]
+			`INSERT INTO products(name, price, imageurl,owner_id) values($1,$2,$3,$4)`,
+			[req.body.name, req.body.price, req.body.imageurl,req.body.owner_id]
 		);
 		res.status(200).json({
 			status: "successfully created",
@@ -96,15 +96,14 @@ app.put("/api/v1/products/:id", async (req, res) => {
 });
 
 //remove a product
-app.delete("/api/v1/products/:id", async (req, res) => {
+app.delete("/api/v1/products/delete", async (req, res) => {
 	try {
 		const products = await db.query(`DELETE FROM products where id=$1 `, [
-			req.params.id,
+			req.body.id,
 		]);
 		res.status(200).json({
 			status: "successfully deleted",
 			result: products.rows.length,
-			data: products.rows[0],
 		});
 	} catch (error) {
 		console.log(error);
@@ -234,6 +233,22 @@ app.delete("/api/v1/users/cart/remove", async (req, res) => {
 			status: "success",
 			result: cart.rows.length,
 			data: cart.rows,
+		});
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+//get all products for sale from user:id
+app.post("/api/v1/products/forsale", async (req, res) => {
+	try {
+		const products = await db.query(
+			`SELECT * FROM products WHERE owner_id=$1`,
+			[req.body.owner_id]
+		);
+		res.status(200).send({
+			status: "success",
+			data: products.rows,
 		});
 	} catch (error) {
 		console.log(error);

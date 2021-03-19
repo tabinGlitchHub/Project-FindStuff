@@ -38,6 +38,9 @@ INSERT INTO users(user_id,user_name) values(1,'admin1');
 --insert cart
 INSERT INTO cart(product_id, user_id) values(1,1);
 
+--insert forsale
+INSERT INTO forsale(product_id, user_id) values(1,1);
+
 
 --UPDATE/ADD VALUES------------------------------------------------------
 
