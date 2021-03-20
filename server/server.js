@@ -45,6 +45,29 @@ app.get("/api/v1/reviews/:id", async (req, res) => {
 	}
 });
 
+//post a review
+app.post("/api/v1/reviews/post", async (req, res) => {
+	try {
+		const reviews = await db.query(
+			`INSERT INTO reviews(product_id, reviewer_name, review_title, review_description, rating) values($1, $2, $3, $4, $5) returning *`,
+			[
+				req.body.product_id,
+				req.body.reviewer_name,
+				req.body.review_title,
+				req.body.review_description,
+				req.body.rating,
+			]
+		);
+		res.status(200).json({
+			status: "success",
+			result: reviews.rows.length,
+			data: reviews.rows
+		});
+	} catch (error) {
+		console.log(error);
+	}
+});
+
 //get a single product
 app.get("/api/v1/products/:id", async (req, res) => {
 	try {
@@ -66,7 +89,7 @@ app.post("/api/v1/products/", async (req, res) => {
 	try {
 		const products = await db.query(
 			`INSERT INTO products(name, price, imageurl,owner_id) values($1,$2,$3,$4)`,
-			[req.body.name, req.body.price, req.body.imageurl,req.body.owner_id]
+			[req.body.name, req.body.price, req.body.imageurl, req.body.owner_id]
 		);
 		res.status(200).json({
 			status: "successfully created",
