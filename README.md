@@ -3,5 +3,6 @@ It consists use of PostGres, Express, React.js and Node.js
 
 Intended features:
 -Rating System.
--Add/Remove Products from the site on command.
+-Add/Remove Products from sale.
 -Cart system.
+-User Login feature.
