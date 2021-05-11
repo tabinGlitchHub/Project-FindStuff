@@ -32,8 +32,7 @@ const Header = () => {
 	};
 	return (
 		<div className='header'>
-			<h1 className='h1'>Find Stuff</h1>
-			<p>{isLoggedin ? "Hello, " + currentUserName : ""}</p>
+			<p className='titletxt'>{isLoggedin ? "Hello, " + currentUserName : "You are not logged in!"}</p>
 			<button
 				className='loginBtn'
 				onClick={() => {
@@ -42,7 +41,7 @@ const Header = () => {
 				{isLoggedin ? "Log out" : "Log in"}
 			</button>
 			<nav>
-				<ul className='nav nav-pills justify-content-end '>
+				<ul className='nav nav-pills'>
 					<li className='nav-item'>
 						<button
 							className='nav-link'

@@ -6,7 +6,7 @@ function Home() {
 	return (
 		<div>
 			<Header />
-			<ProductList></ProductList>
+			<ProductList/>
 		</div>
 	);
 }

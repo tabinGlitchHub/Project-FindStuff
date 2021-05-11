@@ -79,7 +79,7 @@ const ProductList = (props) => {
 
 	return (
 		<main className='container'>
-			<div className='row'>
+			<div className='wrapper'>
 				{productList.map((product) => {
 					return (
 						<div
@@ -87,7 +87,7 @@ const ProductList = (props) => {
 								handleClick(product.id);
 							}}
 							key={product.id}
-							className='box col-xl'>
+							className='box'>
 							<img
 								className='img-fluid image-curve'
 								src={product.imageurl}

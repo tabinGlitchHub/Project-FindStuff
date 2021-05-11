@@ -13,7 +13,7 @@ function App() {
 			<ProductContextProvider>
 				<Router>
 					<Switch>
-						<Route exact path='/login' component={LoginPage}/>
+						<Route exact path='/login' component={LoginPage} />
 						<Route exact path='/' component={Home} />
 						<Route exact path='/cart' component={Cart} />
 						<Route exact path='/product/:id' component={ProductDetail} />
