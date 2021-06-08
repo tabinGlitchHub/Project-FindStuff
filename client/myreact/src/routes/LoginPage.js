@@ -81,7 +81,7 @@ const LoginPage = () => {
 
 	return (
 		<div className='container card loginForm'>
-			<form>
+			<form className='formContent'>
 				<div className='mb-3'>
 					<h2>Login</h2>
 					<input
